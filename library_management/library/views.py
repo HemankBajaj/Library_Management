@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User, auth
-from django.contrib.auth import login
+from django.contrib.auth import login,logout
 from django.contrib import messages #import messages
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from .forms import NewUserForm
@@ -32,3 +32,11 @@ def userlogin(request):
 
 def userhome(request):
     return render(request, 'userhome.html')
+
+def logoutuser(request):
+    if request.method == "POST":
+        logout(request)
+        return redirect('index')
+
+def librlogin(request):
+    return render(request, 'librlogin.html')
