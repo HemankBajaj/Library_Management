@@ -19,5 +19,9 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('library.urls')),
-    
+
 ]
+
+admin.site.site_header = "LibraryAdmin"
+admin.site.site_title = "Library Admin Portal"
+admin.site.index_title = "Welcome to Library Admin Portal"
