@@ -52,7 +52,8 @@ def bookview(request):
     return render(request, 'bookview.html',{'books':books})
 @login_required(login_url='userlogin')
 def userprofile(request):
-    return render(request, 'userprofile.html')
+    reviews=models.Review.objects.filter(user=request.user)
+    return render(request, 'userprofile.html',locals())
 
 @login_required(login_url='userlogin')
 def book_detail(request, pk):

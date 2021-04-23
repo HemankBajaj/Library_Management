@@ -6,4 +6,10 @@
 Username : {{user.username}}<br>
 Email : {{user.email}}<br>
 Role: {% if  user.is_superuser %}Admin{% elif user.is_staff %}Staff{% else %}User{% endif %}
+<h3> My Reviews</h3>
+{% for review in reviews %}
+<b>Book Name: </b>{{review.book}}<br>
+<b>Rating: </b>{{review.rating}}⭐<br>
+<b>Review: </b>{{review.review}}<br><br>
+{% endfor %}
 {% endblock body %}
