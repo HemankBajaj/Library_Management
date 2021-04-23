@@ -11,7 +11,15 @@
     </title>
 </head>
 <body>
-
+    {% if user.is_authenticated %}
+    <a href="userhome"> HomePage </a><br>
+    <a href="bookview"> View All Books </a><br>
+    <a href="userprofile"> View Your Profile </a><br>
+    <form action="logout" method="post">
+            {% csrf_token %}
+            <button class="btn btn-primary btn-sm" type="submit">Log Out</button>
+        </form>
+    {% endif %}
     {% block body %}{% endblock body %}
 
     <!-- Optional JavaScript; choose one of the two! -->

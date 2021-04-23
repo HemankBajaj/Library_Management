@@ -1,0 +1,42 @@
+{% extends 'userbase.html' %}
+
+{% block title %}Books{% endblock title %}
+
+{% block body %}
+
+{% if books%}
+<table>
+<thead>
+<tr>
+<th>Book Name</th>
+<th>ISBN</th>
+<th>Author</th>
+<th>Genre</th>
+<th>Number of Copies Available</th>
+</tr>
+</thead>
+<tfoot>
+<tr>
+<td colspan="4" rowspan="4">
+<div class="links"></div>
+</td>
+</tr>
+</tfoot>
+<tbody>
+  {% for book in books %}
+    <tr>
+      <td><a href="{{book.get_absolute_url}}">{{book.title}}</a></td>
+      <td>{{book.isbn}}</td>
+      <td>{{book.author}}</td>
+      <td>{{book.genre}}</td>
+      <td>{{book.number}}</td>
+    </tr>
+  {% endfor %}
+</tbody>
+</table>
+{%else%}
+<h1>Have 0 book</h1>
+{%endif%}
+
+
+{% endblock body %}

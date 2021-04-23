@@ -6,11 +6,8 @@
 
 <nav class="mb-3">
     {% if user.is_authenticated %}
-        Welcome {{user.username}}<br>
-        <form action="logout" method="post">
-            {% csrf_token %}
-            <button class="btn btn-primary btn-sm" type="submit">Log Out</button>
-        </form>
+        <h1>Welcome <b><u>{{user.username}}</u></b></h1><br>
+        
     {% endif %}
 </nav>
 {% endblock body %}

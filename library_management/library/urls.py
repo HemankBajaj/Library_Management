@@ -7,5 +7,8 @@ urlpatterns = [
     path('userlogin', views.userlogin, name='userlogin'),
     path('librlogin', views.librlogin, name='librlogin'),
     path('userhome', views.userhome, name='userhome'),
-    path('logout', views.logoutuser, name='logout')
+    path('logout', views.logoutuser, name='logout'),
+    path('bookview', views.bookview, name='bookview'),
+    path('userprofile', views.userprofile, name = 'userprofile'),
+    path('bookview/<int:pk>', views.book_detail, name='book_detail'),
 ]
