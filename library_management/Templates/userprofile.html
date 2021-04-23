@@ -4,5 +4,6 @@
 <h1>MY PROFILE </h1>
  <h3> Basic Info</h3>
 Username : {{user.username}}<br>
-Email : {{user.email}}
+Email : {{user.email}}<br>
+Role: {% if  user.is_superuser %}Admin{% elif user.is_staff %}Staff{% else %}User{% endif %}
 {% endblock body %}

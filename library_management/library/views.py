@@ -1,9 +1,10 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.http import HttpResponse
 from django.contrib.auth.models import User, auth
 from django.contrib.auth import login,logout
 from django.contrib import messages #import messages
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from .forms import NewUserForm
+from .forms import NewUserForm, BookForm, ReviewForm
 from django.db import models
 from django.contrib.auth.decorators import login_required,user_passes_test
 from . import forms,models
@@ -55,6 +56,35 @@ def userprofile(request):
 
 @login_required(login_url='userlogin')
 def book_detail(request, pk):
-  return render(request, 'book_detail.html', {
-    'book': get_object_or_404(Book, id=pk)
-  })
+    book =  get_object_or_404(Book, id=pk)
+    reviews=models.Review.objects.filter(book=book)
+    n = len(reviews)
+    final_rate= 0
+    for review in reviews:
+        final_rate+=int(review.rating)
+    if n>0:
+        final_rate /= n
+    review_form = ReviewForm()
+    if request.method =="POST":
+         review_form = ReviewForm(request.POST)
+         if review_form.is_valid():
+            rev = review_form.save(commit=False)
+            rev.user = request.user
+            rev.book = book
+            rev.save()
+            return HttpResponse('Review Submitted')
+    return render(request, 'book_detail.html', locals())
+
+
+
+
+
+def addbook(request):
+    book_form = BookForm()
+    if request.method == "POST":
+        book_form = BookForm(request.POST)
+        if book_form.is_valid():
+            book_form.save()
+            return redirect('bookview')
+    return render(request,'addbook.html', {'book_form':book_form})
+

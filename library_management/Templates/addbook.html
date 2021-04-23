@@ -1,0 +1,11 @@
+{% extends 'userbase.html' %}
+{{% block body %}
+{% if user.is_staff %}
+<h1> Hello Librarian ....Add a new book </h1>
+<form method="POST" action="addbook">
+{% csrf_token %}
+{{book_form.as_p}}
+<input type="submit" value="ADD BOOK"><br>
+</form>
+{% endif %}
+{% endblock body %}}

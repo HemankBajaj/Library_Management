@@ -11,4 +11,7 @@ urlpatterns = [
     path('bookview', views.bookview, name='bookview'),
     path('userprofile', views.userprofile, name = 'userprofile'),
     path('bookview/<int:pk>', views.book_detail, name='book_detail'),
+    path('addbook',views.addbook, name="addbook"),
+    path('bookview/bookview', views.bookview, name='bookview'),
+    path('bookview/bookview/<int:pk>', views.book_detail, name='book_detail'),
 ]
