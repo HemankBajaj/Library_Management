@@ -46,3 +46,4 @@ class Review(models.Model):
         s4 = self.review
 
         return "["+ s1 + "] [" + s2 + "] " + " " + s4
+

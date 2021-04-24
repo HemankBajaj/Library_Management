@@ -37,7 +37,13 @@
   {% for review in reviews  %}
   <b>UserName:</b> {{review.user}}<br>
   <b>Rating: </b> {{review.rating}}⭐<br>
-  <b>Review: </b>{{review.review}}<br><br>
+  <b>Review: </b>{{review.review}}<br>
+  {% if user.is_staff %}
+  <form action="review/{{review.id}}" method="POST">
+    {% csrf_token %}
+    <input type="submit" value="Delete Review">
+</form><br><br>
+  {% endif %}
   {% endfor %}
   {% else %}
   <h3>Be The First One To Write a Review</h3>

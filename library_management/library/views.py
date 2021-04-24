@@ -8,7 +8,7 @@ from .forms import NewUserForm, BookForm, ReviewForm
 from django.db import models
 from django.contrib.auth.decorators import login_required,user_passes_test
 from . import forms,models
-from .models import Book
+from .models import Book,Review
 # Create your views here.
 
 def index(request):
@@ -76,7 +76,11 @@ def book_detail(request, pk):
             return HttpResponse('Review Submitted')
     return render(request, 'book_detail.html', locals())
 
-
+def SearchPage(request):
+    srh = request.GET['query']
+    books = models.Book.objects.filter(title__icontains=srh)
+    books = {'books': books, 'search':srh}
+    return render(request, 'bookview.html', books)
 
 
 
@@ -89,3 +93,11 @@ def addbook(request):
             return redirect('bookview')
     return render(request,'addbook.html', {'book_form':book_form})
 
+
+@login_required(login_url='userlogin')
+def review_delete(request,pk):
+    review = get_object_or_404(Review, pk=pk)
+    if request.method == "POST":
+        review.delete()
+        return HttpResponse('Comment Successfully Deleted')
+    

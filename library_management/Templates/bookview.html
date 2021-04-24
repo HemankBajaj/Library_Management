@@ -23,6 +23,11 @@
 </tr>
 </tfoot>
 <tbody>
+   <form action="{% url 'search_result' %}" method="get">
+      <input name="query" type="text" placeholder="Search here.." >
+      <button type="submit" name="button">Submit</button>
+    </form>
+
   {% for book in books %}
     <tr>
       <td><a href="/bookview/{{book.id}}">{{book.title}}</a></td>
