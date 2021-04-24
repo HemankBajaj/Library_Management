@@ -80,8 +80,7 @@ def book_detail(request, pk):
             form = BookForm(request.POST,instance=book)
             if form.is_valid():
                 book1 = form.save(commit=False)
-                book = book1
-                book.save()
+                book1.save()
                 return HttpResponse('Book Successfully Updated')
     
     return render(request, 'book_detail.html', locals())
@@ -96,11 +95,12 @@ def SearchPage(request):
 
 def addbook(request):
     book_form = BookForm()
+    books = models.Book.objects.all
     if request.method == "POST":
         book_form = BookForm(request.POST)
         if book_form.is_valid():
             book_form.save()
-            return redirect('bookview')
+            return render(request, 'bookview.html', locals())
     return render(request,'addbook.html', {'book_form':book_form})
 
 

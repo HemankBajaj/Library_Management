@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 
 
 class Book(models.Model):
-    title=models.CharField(max_length=30)
+    title=models.CharField(max_length=50)
     genre_choice= [
         ('academics', 'Academics'),
         ('fiction', 'Fiction'),
