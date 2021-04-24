@@ -61,19 +61,29 @@ def book_detail(request, pk):
     reviews=models.Review.objects.filter(book=book)
     n = len(reviews)
     final_rate= 0
+    form = BookForm(instance = book)
     for review in reviews:
         final_rate+=int(review.rating)
     if n>0:
         final_rate /= n
     review_form = ReviewForm()
     if request.method =="POST":
-         review_form = ReviewForm(request.POST)
-         if review_form.is_valid():
-            rev = review_form.save(commit=False)
-            rev.user = request.user
-            rev.book = book
-            rev.save()
-            return HttpResponse('Review Submitted')
+        if "add_review" in request.POST:
+            review_form = ReviewForm(request.POST)
+            if review_form.is_valid():
+                rev = review_form.save(commit=False)
+                rev.user = request.user
+                rev.book = book
+                rev.save()
+                return HttpResponse('Review Submitted')
+        else:
+            form = BookForm(request.POST,instance=book)
+            if form.is_valid():
+                book1 = form.save(commit=False)
+                book = book1
+                book.save()
+                return HttpResponse('Book Successfully Updated')
+    
     return render(request, 'book_detail.html', locals())
 
 def SearchPage(request):
@@ -100,4 +110,8 @@ def review_delete(request,pk):
     if request.method == "POST":
         review.delete()
         return HttpResponse('Comment Successfully Deleted')
-    
+
+
+
+        
+

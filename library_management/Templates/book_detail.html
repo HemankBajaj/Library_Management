@@ -3,6 +3,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <style>
+    #main{
+      
+      display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    }
+    </style>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,6 +21,8 @@
     </title>
 </head>
 <body>
+<div id="main">
+<div id="1">
     <h1>{{book.title}} by {{book.author}} </h1>
     {% if final_rate %}<h1>{{final_rate}}⭐</h1><br>
     {% else %}<h2>UNRATED : Be the first one to rate it</h2>
@@ -22,16 +32,26 @@
 <b>Genre: </b>{{book.genre}} <br>
 <b>ISBN Number: </b> {{book.isbn}}<br>
 <b>Number of Copies Availabe: </b>{{book.number}} <br>
-
 <br>
 {% if user.is_authenticated %}
+{% if user.is_staff %}
+<h3> <b> Update Book</b></h3>
+<form action="bookview/{{book.id}}" method="POST">
+ {% csrf_token %}
+  {{form.as_p}}
+  <input type="submit" name="update" value="Update Book">
+</form>
+{% endif %}
+
 <h1> Add Review</h1>
   <form action="bookview/{{book.id}}" method="POST">
   {% csrf_token %}
   {{review_form.as_p}}
-  <input type="submit" value="Submit Review"><br>
+  <input type="submit" name="add_review" value="Submit Review"><br>
   </form>
-  <br> <br> <br>
+  </div>
+
+  <div id="2">
   <h1> REVIEWS </h1>
   {% if reviews %}
   {% for review in reviews  %}
@@ -42,15 +62,17 @@
   <form action="review/{{review.id}}" method="POST">
     {% csrf_token %}
     <input type="submit" value="Delete Review">
-</form><br><br>
+</form><br>
   {% endif %}
+  <br>
   {% endfor %}
   {% else %}
   <h3>Be The First One To Write a Review</h3>
   {% endif %}
   
 {% endif %}
-
+</div>
+</div>
     <!-- Optional JavaScript; choose one of the two! -->
 
     <!-- Option 1: Bootstrap Bundle with Popper -->
