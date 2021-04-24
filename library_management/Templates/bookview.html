@@ -22,12 +22,13 @@
 </td>
 </tr>
 </tfoot>
-<tbody>
+<tbody><br><br>
+<h3> Search Your Favourite Books</h3>
    <form action="{% url 'search_result' %}" method="get">
       <input name="query" type="text" placeholder="Search here.." >
       <button type="submit" name="button">Submit</button>
-    </form>
-
+    </form><br><br>
+  
   {% for book in books %}
     <tr>
       <td><a href="/bookview/{{book.id}}">{{book.title}}</a></td>
@@ -40,7 +41,7 @@
 </tbody>
 </table>
 {%else%}
-<h1>Have 0 book</h1>
+<h1>No Books Found</h1>
 {%endif%}
 
 
