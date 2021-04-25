@@ -24,4 +24,4 @@ class ReviewForm(forms.ModelForm):
 class IssueRequestForm(forms.ModelForm):
     class Meta:
         model = IssueRequest
-        exclude = ['user','book', 'permission', 'status']
+        exclude = ['user','book', 'permission', 'status','returned','issue_date','return_date']

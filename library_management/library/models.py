@@ -56,6 +56,11 @@ class IssueRequest(models.Model):
     statu = ((False,'pending'),(True,'seen'))
     status=models.BooleanField(max_length=30,choices=statu,default=False)
     permission=models.BooleanField(max_length=30,choices=permissions,default=False)
+    choice = ((True,'returned'),(False,'Not Returned')) 
+    returned = models.BooleanField(max_length=30,choices=choice,default=False)
+    issue_date = models.DateTimeField(null=True,blank=True)
+    return_date = models.DateTimeField(null=True,blank=True)
+    
     def __str__(self):
         if not self.permission and not self.status:
             return "Pending "+ self.user.username + " " + self.book.title
@@ -63,4 +68,4 @@ class IssueRequest(models.Model):
             return "Rejected " + self.user.username + " " + self.book.title
         if self.permissions and self.status:
             return "Accepted " + self.user.username + " " + self.book.title
-
+        

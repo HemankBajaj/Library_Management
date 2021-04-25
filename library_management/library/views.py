@@ -9,7 +9,7 @@ from django.db import models
 from django.contrib.auth.decorators import login_required,user_passes_test
 from . import forms,models
 from .models import Book,Review, IssueRequest
-import datetime
+import datetime as DT
 
 # Create your views here.
 
@@ -63,9 +63,11 @@ def book_detail(request, pk):
     book =  get_object_or_404(Book, id=pk)
     reviews=models.Review.objects.filter(book=book)
     n = len(reviews)
+    user = request.user
     final_rate= 0
     irequest = IssueRequestForm()
     form = BookForm(instance = book)
+    requ = models.IssueRequest.objects.filter(book=book, user= user)
     for review in reviews:
         final_rate+=int(review.rating)
     if n>0:
@@ -133,15 +135,20 @@ def delete_book(request,pk):
         for review in reviews:
             review.delete()
         return redirect('userhome')
-    
+
 def pending(request):
     requests = models.IssueRequest.objects.all()
+    today = DT.date.today()
     return render(request, 'pending.html',locals())
 
 @login_required(login_url='userlogin')
 def issue(request, pk):
+    user = request.user()
     req = get_object_or_404(IssueRequest,id =pk)
     req_form = IssueRequestForm(instance = req)
+    book = req.book
+    today = DT.date.today()
+    week_after = today + DT.timedelta(days=7)
     if request.method =="POST":
         if "issue" in request.POST:
             req_form = IssueRequestForm(request.POST, instance = req)
@@ -149,6 +156,10 @@ def issue(request, pk):
                 r = req_form.save(commit=False)
                 r.permission =True
                 r.status = True
+                r.return_date = week_after
+                r.issue_date = today
+                book.number -= 1
+                book.save()
                 r.save()
                 return HttpResponse("BOOK ISSUED")
         else:

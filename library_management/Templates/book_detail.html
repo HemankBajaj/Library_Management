@@ -34,12 +34,15 @@
 <b>Number of Copies Availabe: </b>{{book.number}} <br>
 <br>
 {% if user.is_authenticated %}
+{% if requ %}<h4>Issue Request Already Made </h4>
+{% else %}
 {% if book.number %} 
 <form action="bookview/{{book.id}}" method="POST">
  {% csrf_token %}
   <input type="submit" name="ISSUE BOOK" value="Issue Book">
 </form><br>
 {% else %}<h4>Sorry The Book Is Not Available Rigth Now</h4>
+{% endif %}
 {% endif %}
 {% endif %}
 {% if user.is_authenticated %}

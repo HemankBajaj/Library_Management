@@ -18,7 +18,8 @@ Role: {% if  user.is_superuser %}Admin{% elif user.is_staff %}Staff{% else %}Use
 {% if request.status %}
 <b>Book Name: </b>{{request.book}}<br>
 <b>Status: </b>Issued<br>
-{% endif %}
+<b>Date Due: </b>{% if today.date >= request.return_date.date %}<font color="redn">{% else %}<font color="green">{% endif %} {{request.return_date}} </font>
+{% endif %}<br><br>
 {% else %}
 {% if request.status %}
 <b>Book Name: </b>{{request.book}}<br>
