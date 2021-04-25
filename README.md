@@ -35,7 +35,7 @@ for the staff members limiting their powers on the admin portal.<br><br>
 ## Django Admin
 <br>
 In this portal staff memebers can edit data of various models that our project uses. They can edit, delete, add Books, Reviews, Users, IssueRequests.<br>
-Most of the functions that can be performed with the django admin interface can be performed by loging in to our site as well. Altough the implementation of django admin remains far better.
+Most of the functions that can be performed with the django admin interface can be performed by loging in to our site as well. Altough the implementation of django admin remains far better.<br>
 ## Home Pages
 
 Home Page shows various options available to users through which they can interact with our website. They can view and search books, see their profile pages and logout from the website<br>
@@ -53,7 +53,7 @@ Staff people have more power and control in this page as well. They can update t
 For making the rating system we have made a Review model and placed a form on the webpage of the book so that the users can rate their favourite books. Admins can delete offensive reviews by simply clicking on the delete review button that is right next to the review on the book's own webpage. Average Rating is also displayed in the book info section.<br>
 ## Updating/Delete Books
 
-Only admins are allowed to update any books. To update any book they can simply visit that book's page and fill in the necessary updates there and submit the form by clicking on Update button. Then our webapp returns an HttpResponse saying book update successful on success of the task. We canreload the page to see the updates in effect. 
+Only admins are allowed to update any books. To update any book they can simply visit that book's page and fill in the necessary updates there and submit the form by clicking on Update button. Then our webapp returns an HttpResponse saying book update successful on success of the task. We canreload the page to see the updates in effect. <br>
 ## Adding Books
 Librarians can add new books to the database by clicking on the add book link on the top of the page. Librarians have to fill a small form giving the book info and then submit that form in order to create a new book.
 This new book that is added is now visible under the all books section.<br>
