@@ -36,8 +36,8 @@ for the staff members limiting their powers on the admin portal.<br><br>
 <br>
 In this portal staff memebers can edit data of various models that our project uses. They can edit, delete, add Books, Reviews, Users, IssueRequests.<br>
 Most of the functions that can be performed with the django admin interface can be performed by loging in to our site as well. Altough the implementation of django admin remains far better.<br>
-## Home Pages
 
+## Home Pages
 Home Page shows various options available to users through which they can interact with our website. They can view and search books, see their profile pages and logout from the website<br>
 Staff members see extra options in this page. They can Add a new Book, see pending requests, etc.<br>
 
