@@ -143,7 +143,6 @@ def pending(request):
 
 @login_required(login_url='userlogin')
 def issue(request, pk):
-    user = request.user()
     req = get_object_or_404(IssueRequest,id =pk)
     req_form = IssueRequestForm(instance = req)
     book = req.book
@@ -161,7 +160,7 @@ def issue(request, pk):
                 book.number -= 1
                 book.save()
                 r.save()
-                return HttpResponse("BOOK ISSUED")
+                return redirect('pending')
         else:
             req_form = IssueRequestForm(request.POST, instance = req)
             if req_form.is_valid():
