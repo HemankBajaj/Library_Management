@@ -175,5 +175,12 @@ def issued(request):
     requests = models.IssueRequest.objects.filter(returned=False, permission = True)
     return render(request, 'issued.html', locals())
 
-
+def return_book(request, pk):
+    request = get_object_or_404(IssueRequest,id =pk)
+    book1= request.book
+    book1.number += 1
+    request.returned = True
+    request.save()
+    book1.save() 
+    return redirect('issued')
     

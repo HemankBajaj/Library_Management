@@ -7,7 +7,11 @@
 <b>Name: </b>{{request.user.username}}<br>
 <b>Book Title: </b>{{request.book.title}}<br>
 <b>Issue Date: </b>{{request.issue_date}}<br>
-<b>Return Date: </b>{{request.return_date}}<br><br>
+<b>Return Date: </b>{{request.return_date}}<br>
+<form action="return_book/{{request.id}}" method="POST">
+ {% csrf_token %}
+  <input type="submit" name="Return" value="Returned Book">
+</form><br><br>
 {% endfor %}
 {% endif %}
 
