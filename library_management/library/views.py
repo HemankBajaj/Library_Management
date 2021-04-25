@@ -171,8 +171,9 @@ def issue(request, pk):
                 r.save()
                 return HttpResponse("Issue Declined Successfully")
 
-
-
+def issued(request):
+    requests = models.IssueRequest.objects.filter(returned=False, permission = True)
+    return render(request, 'issued.html', locals())
 
 
     

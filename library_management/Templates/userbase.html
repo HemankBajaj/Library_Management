@@ -17,7 +17,8 @@
     <a href="userprofile"> View Your Profile </a><br>
     {% if user.is_staff %}
     <a href="addbook">Add New Book</a><br>
-    <a href='pending'>Pending Requests</a>
+    <a href='pending'>Pending Requests</a><br>
+    <a href='issued'>Currently Issued Books</a><br>
     {% endif %}
     <form action="logout" method="post">
             {% csrf_token %}

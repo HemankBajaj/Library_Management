@@ -19,5 +19,6 @@ urlpatterns = [
     path('search/', views.SearchPage, name='search_result'),
     path('bookview/delete_book/<int:pk>', views.delete_book, name='bookdelete'),
     path('pending', views.pending, name ='pending'),
-    path('issue/<int:pk>',views.issue, name='issue')
+    path('issue/<int:pk>',views.issue, name='issue'),
+    path('issued', views.issued, name='issued')
 ]

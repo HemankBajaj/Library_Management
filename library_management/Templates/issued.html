@@ -1,0 +1,14 @@
+{% extends 'userbase.html' %}
+{% block title %}Issued Books{% endblock title %}Issued Books
+{% block body %}
+{% if user.is_staff %}
+<h1> Presently Issued Books</h1>
+{% for request in requests %}
+<b>Name: </b>{{request.user.username}}<br>
+<b>Book Title: </b>{{request.book.title}}<br>
+<b>Issue Date: </b>{{request.issue_date}}<br>
+<b>Return Date: </b>{{request.return_date}}<br><br>
+{% endfor %}
+{% endif %}
+
+{% endblock body %}
