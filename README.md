@@ -1,7 +1,7 @@
 # Library_Management
 
 ## How to Run the project locally
-Currently I have not been able to host this project on Heruko due to issues of Heruko CLI with Windows OS. But this project can be run locally by cloning this repo
+Currently I have not been able to host this project on Heroku due to issues of Heroku CLI with Windows OS. But this project can be run locally by cloning this repo
 ### Requirements
 Python and Django should be installed locally.<br>
 To install django open terminal and write 
