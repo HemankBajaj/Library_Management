@@ -9,6 +9,7 @@ from django.db import models
 from django.contrib.auth.decorators import login_required,user_passes_test
 from . import forms,models
 from .models import Book,Review, IssueRequest
+import datetime
 
 # Create your views here.
 
@@ -125,7 +126,7 @@ def review_delete(request,pk):
 
 @login_required(login_url='userlogin')
 def delete_book(request,pk):
-    book = get_object_or_404(Book, pk=pk)
+    book = get_object_or_404(Book, id=pk)
     reviews=models.Review.objects.filter(book=book)
     if request.method == "POST":
         book.delete()
@@ -136,6 +137,31 @@ def delete_book(request,pk):
 def pending(request):
     requests = models.IssueRequest.objects.all()
     return render(request, 'pending.html',locals())
+
+@login_required(login_url='userlogin')
+def issue(request, pk):
+    req = get_object_or_404(IssueRequest,id =pk)
+    req_form = IssueRequestForm(instance = req)
+    if request.method =="POST":
+        if "issue" in request.POST:
+            req_form = IssueRequestForm(request.POST, instance = req)
+            if req_form.is_valid():
+                r = req_form.save(commit=False)
+                r.permission =True
+                r.status = True
+                r.save()
+                return HttpResponse("BOOK ISSUED")
+        else:
+            req_form = IssueRequestForm(request.POST, instance = req)
+            if req_form.is_valid():
+                r = req_form.save(commit=False)
+                r.permission =False
+                r.status = True
+                r.save()
+                return HttpResponse("Issue Declined Successfully")
+
+
+
 
 
     

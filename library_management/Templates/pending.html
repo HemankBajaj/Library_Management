@@ -2,6 +2,8 @@
 
 {% block title %}Pending Request{% endblock title %}
 {% block body %}
+<br><br><br>
+<h3>Dear Librarian /you Have The Following Pending Requests</h3>
 {% if user.is_staff %}
 {% for request in requests %}
 {% if request.status %}
@@ -9,6 +11,17 @@
     {% if request.permission %}
     {% else %}
     {{request.user}} {{request.book}}  <br>
+    <form method="post" action="issue/{{request.id}}">
+    {% csrf_token %}
+    {{req_form}}
+    <input type = "submit" value="ISSUE" name = "issue"> 
+    
+    </form>
+    <form method="post" action="issue/{{request.id}}">
+    {% csrf_token %}
+    <input type = "submit" value="DECLINE">
+    </form>
+    <br><br>
     {% endif %}
 {% endif %}
 
