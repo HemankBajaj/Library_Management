@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from .models import Book,Review
+from .models import Book,Review, IssueRequest
 
 
 class NewUserForm(UserCreationForm):
@@ -20,3 +20,8 @@ class ReviewForm(forms.ModelForm):
     class Meta:
         model = Review
         exclude=['user','book']
+
+class IssueRequestForm(forms.ModelForm):
+    class Meta:
+        model = IssueRequest
+        exclude = ['user','book', 'permission', 'status']

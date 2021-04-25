@@ -12,4 +12,21 @@ Role: {% if  user.is_superuser %}Admin{% elif user.is_staff %}Staff{% else %}Use
 <b>Rating: </b>{{review.rating}}⭐<br>
 <b>Review: </b>{{review.review}}<br><br>
 {% endfor %}
+<h3> My ISSUE Request Status</h3>
+{% for request in requests %}
+{% if request.permission %}
+{% if request.status %}
+<b>Book Name: </b>{{request.book}}<br>
+<b>Status: </b>Issued<br>
+{% endif %}
+{% else %}
+{% if request.status %}
+<b>Book Name: </b>{{request.book}}<br>
+<b>Status: </b>Denied<br>
+{% else %}
+<b>Book Name: </b>{{request.book}}<br>
+<b>Status: </b>Pending For Approval<br>
+{% endif %}
+{% endif %}
+{% endfor %}
 {% endblock body %}

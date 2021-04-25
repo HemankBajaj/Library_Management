@@ -11,9 +11,12 @@ urlpatterns = [
     path('bookview', views.bookview, name='bookview'),
     path('userprofile', views.userprofile, name = 'userprofile'),
     path('bookview/<int:pk>', views.book_detail, name='book_detail'),
+    path('bookview/addbook',views.addbook, name="addbook"),
     path('addbook',views.addbook, name="addbook"),
     path('bookview/bookview', views.bookview, name='bookview'),
     path('bookview/bookview/<int:pk>', views.book_detail, name='book_detail'),
     path('bookview/review/<int:pk>', views.review_delete, name='review_delete'),
     path('search/', views.SearchPage, name='search_result'),
+    path('bookview/delete_book/<int:pk>', views.delete_book, name='bookdelete'),
+    path('pending', views.pending, name ='pending'),
 ]

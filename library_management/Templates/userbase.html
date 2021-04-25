@@ -15,7 +15,10 @@
     <a href="userhome"> HomePage </a><br>
     <a href="bookview"> View All Books </a><br>
     <a href="userprofile"> View Your Profile </a><br>
-    {% if user.is_staff %}<a href="addbook">Add New Book</a>{% endif %}
+    {% if user.is_staff %}
+    <a href="addbook">Add New Book</a><br>
+    <a href='pending'>Pending Requests</a>
+    {% endif %}
     <form action="logout" method="post">
             {% csrf_token %}
             <button class="btn btn-primary btn-sm" type="submit">Log Out</button>

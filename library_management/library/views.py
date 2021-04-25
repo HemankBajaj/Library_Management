@@ -4,11 +4,12 @@ from django.contrib.auth.models import User, auth
 from django.contrib.auth import login,logout
 from django.contrib import messages #import messages
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from .forms import NewUserForm, BookForm, ReviewForm
+from .forms import NewUserForm, BookForm, ReviewForm, IssueRequestForm
 from django.db import models
 from django.contrib.auth.decorators import login_required,user_passes_test
 from . import forms,models
-from .models import Book,Review
+from .models import Book,Review, IssueRequest
+
 # Create your views here.
 
 def index(request):
@@ -53,6 +54,7 @@ def bookview(request):
 @login_required(login_url='userlogin')
 def userprofile(request):
     reviews=models.Review.objects.filter(user=request.user)
+    requests = models.IssueRequest.objects.filter(user = request.user)
     return render(request, 'userprofile.html',locals())
 
 @login_required(login_url='userlogin')
@@ -61,6 +63,7 @@ def book_detail(request, pk):
     reviews=models.Review.objects.filter(book=book)
     n = len(reviews)
     final_rate= 0
+    irequest = IssueRequestForm()
     form = BookForm(instance = book)
     for review in reviews:
         final_rate+=int(review.rating)
@@ -76,6 +79,14 @@ def book_detail(request, pk):
                 rev.book = book
                 rev.save()
                 return HttpResponse('Review Submitted')
+        elif "ISSUE BOOK" in request.POST:
+            irequest = IssueRequestForm(request.POST)
+            if irequest.is_valid():
+                req = irequest.save(commit=False)
+                req.book = book
+                req.user = request.user
+                req.save()
+                return redirect('userprofile')
         else:
             form = BookForm(request.POST,instance=book)
             if form.is_valid():
@@ -95,12 +106,11 @@ def SearchPage(request):
 
 def addbook(request):
     book_form = BookForm()
-    books = models.Book.objects.all
     if request.method == "POST":
         book_form = BookForm(request.POST)
         if book_form.is_valid():
             book_form.save()
-            return render(request, 'bookview.html', locals())
+            return redirect('userhome')
     return render(request,'addbook.html', {'book_form':book_form})
 
 
@@ -113,5 +123,19 @@ def review_delete(request,pk):
 
 
 
-        
+@login_required(login_url='userlogin')
+def delete_book(request,pk):
+    book = get_object_or_404(Book, pk=pk)
+    reviews=models.Review.objects.filter(book=book)
+    if request.method == "POST":
+        book.delete()
+        for review in reviews:
+            review.delete()
+        return redirect('userhome')
+    
+def pending(request):
+    requests = models.IssueRequest.objects.all()
+    return render(request, 'pending.html',locals())
 
+
+    

@@ -1,6 +1,8 @@
 from django.db import models
 from django.urls import reverse   # ---> add
 from django.contrib.auth.models import User
+
+
 # Create your models here.
 
 
@@ -21,9 +23,9 @@ class Book(models.Model):
     number = models.PositiveIntegerField()
     def __str__(self):
         return str(self.title)
-    def get_absolute_url(self):       # ---> new function
-        url = 'bookview/' + str(self.id)
-        return url
+    def get_absolute_url(self):
+        return reverse('bookview', args=[str(self.id)])
+
 
 
 
@@ -46,4 +48,19 @@ class Review(models.Model):
         s4 = self.review
 
         return "["+ s1 + "] [" + s2 + "] " + " " + s4
+
+class IssueRequest(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    book = models.ForeignKey('Book',on_delete=models.CASCADE)
+    permissions = ((False,'denied'),(True,'issued'))
+    statu = ((False,'pending'),(True,'seen'))
+    status=models.BooleanField(max_length=30,choices=statu,default=False)
+    permission=models.BooleanField(max_length=30,choices=permissions,default=False)
+    def __str__(self):
+        if not self.permission and not self.status:
+            return "Pending "+ self.user.username + " " + self.book.title
+        if not self.permission and self.status:
+            return "Rejected " + self.user.username + " " + self.book.title
+        if self.permissions and self.status:
+            return "Accepted " + self.user.username + " " + self.book.title
 

@@ -1,0 +1,18 @@
+{% extends 'userbase.html' %}
+
+{% block title %}Pending Request{% endblock title %}
+{% block body %}
+{% if user.is_staff %}
+{% for request in requests %}
+{% if request.status %}
+{% else %} 
+    {% if request.permission %}
+    {% else %}
+    {{request.user}} {{request.book}}  <br>
+    {% endif %}
+{% endif %}
+
+{% endfor %}
+{% endif %}
+{% endblock body %}
+
